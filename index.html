@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capisco Lead Triage</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Capisco Lead Triage</h1>
+    <p class="subtitle">No scraping. Paste leads, score them, and focus on the best local deals near New Rochelle, NY.</p>
+
+    <section class="card">
+      <h2>1) Search Link Generator</h2>
+      <div class="grid">
+        <label>Home location <input id="homeLocation" value="New Rochelle, NY" /></label>
+        <label>Target radius (miles) <input id="radius" type="number" value="30" min="1" /></label>
+        <label>Max target price ($) <input id="maxPrice" type="number" value="400" min="50" /></label>
+      </div>
+      <div class="row">
+        <button id="generateLinks">Generate targeted links</button>
+        <button id="openTopLinks">Open top 6 links</button>
+      </div>
+      <div id="links"></div>
+    </section>
+
+    <section class="card">
+      <h2>2) Add Leads</h2>
+      <form id="leadForm" class="grid">
+        <label>Title <input id="title" required /></label>
+        <label>URL <input id="url" type="url" required /></label>
+        <label>Price ($) <input id="price" type="number" min="0" required /></label>
+        <label>Location <input id="location" required /></label>
+        <label>Source <input id="source" placeholder="Craigslist / eBay / etc." required /></label>
+        <label>Notes <input id="notes" placeholder="shipping only, office liquidation, etc." /></label>
+      </form>
+      <div class="row">
+        <button id="addLead">Add lead</button>
+      </div>
+      <h3>Bulk Paste (CSV or pipe-separated)</h3>
+      <p class="hint">Columns: title,url,price,location,source,notes</p>
+      <textarea id="bulkPaste" rows="5" placeholder="HAG Capisco 8106,https://example.com,350,White Plains,Craigslist,local pickup"></textarea>
+      <div class="row">
+        <button id="parseBulk">Parse + add rows</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3) Ranking + Decision Support</h2>
+      <div class="row wrap">
+        <label>Preset
+          <select id="preset">
+            <option value="balanced">Balanced</option>
+            <option value="strict">Strict exact-match</option>
+            <option value="bargain">Bargain hunting</option>
+            <option value="mislabeled">Mislabeled steals</option>
+          </select>
+        </label>
+        <label>Filter recommendation
+          <select id="filterRec">
+            <option value="ALL">All</option>
+            <option value="CONTACT NOW">CONTACT NOW</option>
+            <option value="MAYBE">MAYBE</option>
+            <option value="SKIP">SKIP</option>
+          </select>
+        </label>
+        <label>Max price filter ($)<input id="filterPrice" type="number" min="0" placeholder="No cap" /></label>
+      </div>
+      <div class="row">
+        <button id="reScore">Re-score and sort</button>
+        <button id="seedData">Load sample seed leads</button>
+        <button id="clearLeads">Clear all leads</button>
+      </div>
+      <div id="tableWrap"></div>
+    </section>
+
+    <section class="card">
+      <h2>4) Import / Export</h2>
+      <div class="row">
+        <button id="exportCsv">Export CSV</button>
+        <button id="exportJson">Export JSON</button>
+      </div>
+      <p class="hint">Storage: your browser localStorage (survives refresh on same browser/device).</p>
+    </section>
+
+    <section class="card">
+      <h2>ChatGPT second-opinion template</h2>
+      <textarea id="chatgptTemplate" rows="8" readonly></textarea>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
